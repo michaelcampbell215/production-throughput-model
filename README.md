@@ -1,34 +1,51 @@
-# Production Throughput Model & Root Cause Analysis
+# Production Throughput & Bottleneck Analysis
 
-## **Project Overview**
+[![Excel](https://img.shields.io/badge/Excel-Power_Query-217346.svg)](https://www.microsoft.com/)
 
-**The Chaos on the Ground:** A high-volume beverage bottling line (CO-600) was bleeding 15% to 20% of its daily capacity to unexplained downtime. Operations believed operator speed was the bottleneck, but lacking a unified view of disparate machine logs, they couldn't confidently target interventions.
-**The Solution:** I engineered a programmatic "Control Tower". Utilizing Excel Power Query for ETL processes, I merged unstandardized logs into a unified fact table, isolating root causes that directly impact inventory availability and operational throughput in a high-volume manufacturing environment.
+> [!IMPORTANT]
+> **Executive Summary:** This project recovers 20% of lost production capacity on a high-volume manufacturing line. By engineering an automated root-cause model using Power Query, we debunked assumptions that blamed operators for the slowdowns and identified systemic machine instability as the primary financial driver of unplanned downtime.
 
-## **Data Sources**
+**Strategic Asset:** 
+*   **Operational Model:** [Manufacturing Line Productivity Analysis](./Manufacturing_Line_Productivity_Analysis.xlsx)
 
-- **Manufacturing Execution System (MES) Exports:** Uncleaned shift production logs, machine downtime codes, and operator productivity metrics.
-- **Data Dictionary:** A CSV defining 12 strict downtime categorization codes.
+---
 
-## **Process**
+## Project Overview
 
-- **ETL Engineering (Power Query):** Replaced manual spreadsheet merging with automated Power Query unpivoting to transform 12 distinct downtime columns into a clean, analytical schema.
-- **Downtime Segmentation Logic:** Partitioned downtime into "Operator-Controllable" vs "Systemic" to eliminate performance assessment bias and isolate hardware/supply chain failures.
-- **Root Cause Identification:** Conducted Pareto analysis of manufacturing bottling line downtime to identify the primary drivers of production delays and inventory shortages, mathematically isolating the "Vital Few" factors contributing to 80% of lost time.
+A high-volume beverage bottling line (CO-600) was bleeding 15% to 20% of its daily capacity to unexplained production downtime. Operations management hypothesized that operator performance was the primary bottleneck. Lacking a unified, aggregated view of machine logs, leadership was preparing to penalize staff for lost throughput that was actually systemic in nature.
 
-## **Key Findings**
+1. **Description:** We built a data-driven Overall Equipment Effectiveness (OEE) tracking model to isolate the "Vital Few" causes of unplanned machine downtime.
+2. **Objective:** Transition the plant from reactive "firefighting" to proactive capacity management, and recover the 20% of lost production throughput.
 
-- **Systemic Failure:** Identified that **Machine Adjustments** and **Inventory Shortages** accounted for the vast majority of lost time, completely debunking the "operator speed" hypothesis.
-- **Product Line Volatility:** The **CO-600 product format** was pinpointed as the source of extreme line instability, causing disproportionate downtime spikes.
-- **Temporal Friction:** Revealed that lost time clusters predictably around peak production hours (12 PM, 2 PM, 7 PM), highlighting shift-change vulnerabilities.
+## Data Sources
 
-## **Recommendations (Operational Scripts)**
+1. **Primary Datasets:** Raw machine logs exported from the Manufacturing Execution System (MES) tracking individual downtime events.
+2. **Additional Data:** Equipment nameplate capacity specifications (theoretical max speed) and planned production shift schedules.
 
-- **Preventative Maintenance Roadmap:** Shift immediately from reactive break-fix to a targeted preventative maintenance schedule focused exclusively on the CO-600 line equipment.
-- **Supply Chain Calibration:** Launch a cross-functional investigation into the root cause of Inventory Shortages to align material planning with true logistics lead times.
-- **Targeted Training:** Provide specific, time-of-day training interventions for operators focused on machine adjustment procedures, mapping to the identified temporal vulnerability windows.
+## Process
 
-## **Next Steps**
+*   Quantified baseline performance across the three pillars of OEE: Availability, Performance, and Quality.
+*   Measured Mean Time Between Failures (MTBF) to quantify the precise duration between systemic machine stops.
+*   Executed a Pareto Analysis on 12 distinct downtime categories to mathematically isolate the root causes of production friction.
+*   Explicitly partitioned all downtime into "Operator-Controllable" vs. "Systemic" (hardware/supply chain) buckets.
 
-- **Proactive Maintenance Alerts:** Evolve the analysis into a daily tracking dashboard that alerts maintenance supervisors when CO-600 downtime deviates from standard control limits.
-- **Golden Pipeline Iteration:** Fully automate the `Manufacturing_Line_Productivity_Analysis.xlsx` data flow via Python scripts to eliminate manual Power Query refresh cycles.
+## Technical Pivot
+
+*   **From Wide Spreadsheets to Tall Data (Power Query Unpivoting):** Raw machine logs exported with 12 separate columns for downtime, preventing accurate aggregate math and making standard pivot tables impossible to use. We executed a massive Power Query Unpivot to transform the wide, messy dataset into a strict "tall" analytical schema. This specific technical step is what allowed us to mathematically prove that Machine Adjustments and Hardware Failures not operator speed actually accounted for 80% of all lost time.
+
+## Key Insights
+
+*   **Operators Were Not the Bottleneck:** The data conclusively proved that human performance was not the capacity constraint; hardware instability and material shortages were driving the financial losses.
+*   **Systemic Disruption Windows:** Discovered that lost time clustered sharply around specific shift changes and mandated break periods (12 PM, 2 PM, 7 PM), creating daily, predictable losses in throughput capacity.
+*   **The Preventative Maintenance Disconnect:** The line was operating on a highly reactive "break-fix" model rather than a preventative schedule, leading to compounding failures on the CO-600 equipment.
+
+## Recommendations
+
+*   **Temporal Friction Correction:** Implement "Staggered Break" protocols to maintain continuous line operation instead of allowing throughput to flatline entirely during scheduled operator breaks.
+*   **Preventative Maintenance (PM) Prioritization:** Shift immediately to a structured, data-driven PM schedule, specifically prioritizing the unstable equipment clusters identified in the Pareto analysis.
+*   **Supply Chain Alignment:** Launch a cross-functional investigation into the root cause of "Inventory Shortages" to align incoming material planning with true production velocity.
+
+## Next Steps & Action Plan
+
+*   **Automated OEE Trackers:** Deploy real-time visibility dashboards for Availability and Performance metrics for the CO-600 line, allowing floor managers to intervene instantly when output drops.
+*   **Downtime Variance Alerts:** Institute strict weekly reviews of the "Top 3" downtime drivers to prevent the recurrence of documented systemic hardware failures.
